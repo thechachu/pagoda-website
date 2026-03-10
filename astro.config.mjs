@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
-  output: 'hybrid',
+  output: 'server',
   adapter: cloudflare(),
   integrations: [tailwind()],
   site: 'https://pagoda.ge',

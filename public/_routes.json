@@ -1,7 +1,5 @@
 {
-  "routes": [
-    { "pattern": "/pagoda-*", "script": "_worker.js" },
-    { "pattern": "/", "script": "_worker.js" },
-    { "pattern": "/*", "script": "_worker.js" }
-  ]
+  "version": 1,
+  "include": ["/*"],
+  "exclude": []
 }
