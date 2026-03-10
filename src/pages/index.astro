@@ -1,0 +1,150 @@
+---
+// src/pages/index.astro
+export const prerender = false;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WeatherCard from '../components/WeatherCard.astro';
+import CityGrid from '../components/CityGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import { fetchWeatherForCity } from '../lib/weather';
+import { getHomeSeo } from '../lib/seo';
+
+const seo = getHomeSeo();
+
+let weatherData = null;
+let error = null;
+
+try {
+  weatherData = await fetchWeatherForCity('tbilisi');
+} catch (e) {
+  error = (e as Error).message;
+}
+---
+
+<BaseLayout seo={seo} isDay={weatherData?.current.isDay ?? true}>
+  <!-- Hero Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-2 backdrop-blur-md bg-white/15 border border-white/25 rounded-full px-5 py-2 mb-6">
+        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+        <span class="text-white/80 text-sm font-medium">Данные обновлены в реальном времени</span>
+      </div>
+      <h1 class="font-display text-5xl sm:text-6xl font-black text-white mb-4 leading-tight">
+        Пагода<br/>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-cyan-200">в Грузии</span>
+      </h1>
+      <p class="text-white/70 text-xl max-w-2xl mx-auto leading-relaxed">
+        Точный прогноз погоды для всех городов и курортов Грузии. Пагода на 7 дней и 30 дней.
+      </p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="max-w-xl mx-auto mb-12">
+      <div class="relative">
+        <input
+          type="text"
+          id="city-search"
+          placeholder="Поиск города... (Тбилиси, Батуми, Гудаури...)"
+          class="w-full backdrop-blur-xl bg-white/15 border border-white/30 rounded-2xl px-6 py-4 text-white placeholder-white/40 text-sm outline-none focus:border-white/60 focus:bg-white/20 transition-all pr-14"
+          autocomplete="off"
+        />
+        <button class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </button>
+        <!-- Search results dropdown -->
+        <div id="search-results" class="absolute top-full left-0 right-0 mt-2 backdrop-blur-xl bg-white/15 border border-white/20 rounded-2xl overflow-hidden hidden z-50 shadow-2xl">
+        </div>
+      </div>
+    </div>
+
+    <!-- Tbilisi Weather (default) -->
+    {error ? (
+      <div class="max-w-2xl mx-auto backdrop-blur-md bg-red-500/20 border border-red-400/30 rounded-2xl p-6 text-center">
+        <p class="text-white font-semibold mb-2">⚠️ Ошибка загрузки данных</p>
+        <p class="text-white/60 text-sm">{error}</p>
+        <p class="text-white/40 text-xs mt-3">Проверьте настройку переменной OPENWEATHER_API_KEY</p>
+      </div>
+    ) : weatherData ? (
+      <div class="max-w-4xl mx-auto">
+        <div class="flex items-center gap-3 mb-6">
+          <h2 class="font-display text-2xl font-bold text-white">
+            📍 Тбилиси — {weatherData.current.temp}°C
+          </h2>
+          <span class="text-white/50 text-sm">столица Грузии</span>
+        </div>
+        <WeatherCard data={weatherData} />
+      </div>
+    ) : null}
+  </section>
+
+  <!-- City Grid -->
+  <CityGrid />
+
+  <!-- SEO Text Block -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-3xl p-8 sm:p-12">
+      <h2 class="font-display text-3xl font-bold text-white mb-6">Пагода в Грузии — прогноз погоды онлайн</h2>
+      <div class="text-white/70 space-y-4 text-sm sm:text-base leading-relaxed">
+        <p>
+          <strong class="text-white">Pagoda.ge</strong> — ваш главный источник информации о <strong class="text-white">погоде в Грузии</strong> на русском языке. Мы предоставляем точные прогнозы для Тбилиси, Батуми, Кутаиси и всех популярных курортов страны.
+        </p>
+        <p>
+          <strong class="text-white">Пагода 7 дней</strong> позволяет спланировать поездку заранее. Хотите знать, стоит ли ехать в Гудаури кататься на лыжах? Или выбираете между Батуми и Кобулети для пляжного отдыха? Наш сервис поможет принять правильное решение.
+        </p>
+        <p>
+          Данные обновляются каждые 10 минут. Для каждого города доступны: текущая температура, влажность, скорость и направление ветра, атмосферное давление, видимость и почасовой прогноз.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <FAQ cityNameRu="Грузии" />
+</BaseLayout>
+
+<script>
+import type { CityInfo } from '../lib/weather';
+
+const cities = [
+  { slug: 'tbilisi', nameRu: 'Тбилиси' },
+  { slug: 'batumi', nameRu: 'Батуми' },
+  { slug: 'kutaisi', nameRu: 'Кутаиси' },
+  { slug: 'rustavi', nameRu: 'Рустави' },
+  { slug: 'gori', nameRu: 'Гори' },
+  { slug: 'zugdidi', nameRu: 'Зугдиди' },
+  { slug: 'telavi', nameRu: 'Телави' },
+  { slug: 'akhaltsikhe', nameRu: 'Ахалцихе' },
+  { slug: 'poti', nameRu: 'Поти' },
+  { slug: 'mtskheta', nameRu: 'Мцхета' },
+  { slug: 'chiatura', nameRu: 'Чиатура' },
+  { slug: 'borjomi', nameRu: 'Боржоми' },
+  { slug: 'kobuleti', nameRu: 'Кобулети' },
+  { slug: 'sighnaghi', nameRu: 'Сигнахи' },
+  { slug: 'bakuriani', nameRu: 'Бакуриани' },
+  { slug: 'gudauri', nameRu: 'Гудаури' },
+  { slug: 'mestia', nameRu: 'Местиа' },
+  { slug: 'ureki', nameRu: 'Уреки' },
+  { slug: 'sairme', nameRu: 'Саирме' },
+  { slug: 'tskaltubo', nameRu: 'Цхалтубо' },
+];
+
+const input = document.getElementById('city-search') as HTMLInputElement;
+const resultsEl = document.getElementById('search-results') as HTMLDivElement;
+
+input?.addEventListener('input', () => {
+  const q = input.value.toLowerCase().trim();
+  if (!q) { resultsEl.classList.add('hidden'); return; }
+  const filtered = cities.filter(c => c.nameRu.toLowerCase().includes(q));
+  if (!filtered.length) { resultsEl.classList.add('hidden'); return; }
+  resultsEl.innerHTML = filtered.map(c =>
+    `<a href="/pagoda-${c.slug}" class="block px-5 py-3 text-white hover:bg-white/20 transition-colors text-sm border-b border-white/10 last:border-0">${c.nameRu}</a>`
+  ).join('');
+  resultsEl.classList.remove('hidden');
+});
+
+document.addEventListener('click', (e) => {
+  if (!input?.contains(e.target as Node)) resultsEl?.classList.add('hidden');
+});
+</script>

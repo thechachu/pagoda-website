@@ -1,0 +1,112 @@
+---
+// src/pages/blog/luchshee-vremya-dlya-gruzii.astro
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FAQ from '../../components/FAQ.astro';
+
+const seo = {
+  title: 'Лучшее время для поездки в Грузию: руководство по сезонам | pagoda.ge',
+  description: 'Когда лучше всего ехать в Грузию? Полное руководство по климату и сезонам: пляжный отдых в Батуми, горнолыжный Гудаури, весна в Тбилиси. Пагода Грузия.',
+  keywords: 'лучшее время поездки в грузию, климат грузии по месяцам, пагода грузия сезоны, погода в грузии когда ехать',
+  canonical: 'https://pagoda.ge/blog/luchshee-vremya-dlya-gruzii',
+};
+---
+
+<BaseLayout seo={seo}>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16" itemscope itemtype="https://schema.org/Article">
+    <nav class="flex items-center gap-2 text-white/50 text-sm mb-8">
+      <a href="/" class="hover:text-white transition-colors">Пагода</a>
+      <span>/</span>
+      <a href="/blog" class="hover:text-white transition-colors">Блог</a>
+      <span>/</span>
+      <span class="text-white">Лучшее время</span>
+    </nav>
+
+    <header class="mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="backdrop-blur-sm bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">Путешествия</span>
+        <span class="text-white/40 text-xs">15 мая 2025 · 8 мин чтения</span>
+      </div>
+      <h1 class="font-display text-4xl sm:text-5xl font-black text-white mb-6 leading-tight" itemprop="headline">
+        Лучшее время для поездки в Грузию: полное руководство по сезонам
+      </h1>
+      <p class="text-white/70 text-xl leading-relaxed">
+        Грузия привлекает туристов круглый год — у каждого сезона своя прелесть. Разбираем, когда и куда лучше всего ехать.
+      </p>
+    </header>
+
+    <div class="prose prose-invert max-w-none text-white/80 space-y-8" itemprop="articleBody">
+
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">🌸 Весна (март–май)</h2>
+        <p class="leading-relaxed mb-3">
+          Весна — одно из лучших времён для посещения Грузии. Тбилиси расцветает зеленью, температура держится на комфортных 15–22°C. Толп туристов ещё нет, цены на жильё умеренные.
+        </p>
+        <p class="leading-relaxed mb-3">
+          В апреле в Кахетии начинается сезон виноградников — самое романтичное время для посещения Сигнахи и Телави. В горах ещё лежит снег, но дороги уже открыты.
+        </p>
+        <div class="grid grid-cols-3 gap-3 mt-4">
+          <div class="bg-white/10 rounded-xl p-3 text-center">
+            <div class="text-2xl mb-1">🌡</div>
+            <div class="text-white font-bold">15–22°C</div>
+            <div class="text-white/50 text-xs">Тбилиси</div>
+          </div>
+          <div class="bg-white/10 rounded-xl p-3 text-center">
+            <div class="text-2xl mb-1">☀️</div>
+            <div class="text-white font-bold">Солнечно</div>
+            <div class="text-white/50 text-xs">По всей стране</div>
+          </div>
+          <div class="bg-white/10 rounded-xl p-3 text-center">
+            <div class="text-2xl mb-1">👌</div>
+            <div class="text-white font-bold">Идеально</div>
+            <div class="text-white/50 text-xs">Для экскурсий</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">☀️ Лето (июнь–август)</h2>
+        <p class="leading-relaxed mb-3">
+          Лето — пик туристического сезона на Чёрном море. Батуми, Кобулети и Уреки переполнены отдыхающими. Температура воды достигает 24–26°C, воздуха — 28–35°C.
+        </p>
+        <p class="leading-relaxed mb-3">
+          Тбилиси летом очень жаркий (до 38°C). Лучше спасаться в горных районах — Сванетии или Местиа, где прохладнее на 10–15 градусов.
+        </p>
+        <p class="leading-relaxed">
+          В июле открывается сезон треккинга в горах Сванетии и Казбеги. Это лучшее время для похода к Ушбе и восхождений на Кавказ.
+        </p>
+      </div>
+
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">🍂 Осень (сентябрь–ноябрь)</h2>
+        <p class="leading-relaxed mb-3">
+          Осень — пожалуй, самый красивый сезон в Грузии. В сентябре ещё можно купаться в море, а виноградники Кахетии золотятся в предвкушении сбора урожая.
+        </p>
+        <p class="leading-relaxed mb-3">
+          В октябре проходит <strong class="text-white">Ртвели</strong> — сбор винограда. Это уникальная возможность поучаствовать в традиционном грузинском празднике в Телави или Сигнахи.
+        </p>
+      </div>
+
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">❄️ Зима (декабрь–февраль)</h2>
+        <p class="leading-relaxed mb-3">
+          Зима — сезон горнолыжных курортов. <strong class="text-white">Гудаури</strong> и <strong class="text-white">Бакуриани</strong> — главные горнолыжные курорты страны. В Гудаури трассы на высоте 2200–3300 м, снег лежит с декабря по апрель.
+        </p>
+        <p class="leading-relaxed">
+          Тбилиси зимой уютен и малолюден. Снег выпадает редко, но горы вокруг столицы покрыты белым. Цены на отели минимальны.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="mt-10 p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl">
+      <p class="text-white/70 text-sm">
+        <strong class="text-white">Пагода Грузия</strong> — следите за актуальной погодой на <a href="/" class="text-blue-300 hover:underline">pagoda.ge</a>.
+        Прогнозы для всех городов и курортов обновляются каждые 10 минут.
+      </p>
+    </div>
+  </article>
+
+  <FAQ cityNameRu="Грузии" />
+</BaseLayout>

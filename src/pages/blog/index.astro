@@ -1,0 +1,104 @@
+---
+// src/pages/blog/index.astro
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getBlogSeo } from '../../lib/seo';
+
+const seo = getBlogSeo();
+
+const posts = [
+  {
+    slug: 'luchshee-vremya-dlya-gruzii',
+    title: 'Лучшее время для поездки в Грузию: полное руководство по сезонам',
+    excerpt: 'Узнайте, когда лучше всего ехать в Грузию — будь то пляжный отдых в Батуми, горнолыжный сезон в Гудаури или культурные экскурсии по Тбилиси и Кахетии.',
+    date: '15 мая 2025',
+    readTime: '8 мин',
+    category: 'Путешествия',
+    emoji: '🌸',
+    gradient: 'from-emerald-500 to-teal-600',
+  },
+  {
+    slug: 'pogoda-v-gudauri-zima',
+    title: 'Погода в Гудаури зимой: всё о горнолыжном сезоне',
+    excerpt: 'Гудаури — главный горнолыжный курорт Грузии. Рассказываем, когда открывается сезон, сколько снега выпадает и как пагода Гудаури влияет на качество склонов.',
+    date: '3 декабря 2024',
+    readTime: '6 мин',
+    category: 'Курорты',
+    emoji: '🎿',
+    gradient: 'from-blue-500 to-indigo-600',
+  },
+  {
+    slug: 'klimat-gruzii-po-mestam',
+    title: 'Климат Грузии: от субтропиков Батуми до горных ледников Сванетии',
+    excerpt: 'Грузия — страна с удивительно разнообразным климатом. За несколько часов езды можно попасть из субтропического Батуми в суровые горы Сванетии. Разбираем климатические зоны.',
+    date: '20 сентября 2024',
+    readTime: '10 мин',
+    category: 'Климат',
+    emoji: '🗺',
+    gradient: 'from-orange-500 to-rose-600',
+  },
+];
+---
+
+<BaseLayout seo={seo}>
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+    <div class="text-center mb-12">
+      <h1 class="font-display text-5xl font-black text-white mb-4">Блог о погоде<br/>в Грузии</h1>
+      <p class="text-white/60 text-xl max-w-2xl mx-auto">Советы путешественникам, прогнозы сезонов и всё о климате Грузии</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {posts.map(post => (
+        <article class="group backdrop-blur-md bg-white/10 border border-white/20 rounded-3xl overflow-hidden hover:border-white/40 hover:bg-white/15 transition-all duration-300 hover:-translate-y-1">
+          <a href={`/blog/${post.slug}`}>
+            <div class={`h-40 bg-gradient-to-br ${post.gradient} flex items-center justify-center text-6xl`}>
+              {post.emoji}
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="backdrop-blur-sm bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">{post.category}</span>
+                <span class="text-white/40 text-xs">{post.readTime} чтения</span>
+              </div>
+              <h2 class="font-display text-lg font-bold text-white mb-3 leading-snug group-hover:text-blue-200 transition-colors">{post.title}</h2>
+              <p class="text-white/60 text-sm leading-relaxed line-clamp-3">{post.excerpt}</p>
+              <div class="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
+                <span class="text-white/40 text-xs">{post.date}</span>
+                <span class="text-blue-300 text-sm font-medium group-hover:text-blue-200 transition-colors">Читать →</span>
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ on blog -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12" itemscope itemtype="https://schema.org/FAQPage">
+    <div class="text-center mb-8">
+      <h2 class="font-display text-3xl font-bold text-white mb-3">Вопросы о климате Грузии</h2>
+    </div>
+    <div class="space-y-3">
+      {[
+        { q: 'Когда в Грузии пляжный сезон?', a: 'Пляжный сезон в Батуми и на Чёрном море длится с июня по сентябрь. Пик — июль-август, когда температура воды достигает 24–26°C.' },
+        { q: 'Когда открывается горнолыжный сезон в Гудаури?', a: 'Горнолыжный сезон в Гудаури обычно начинается в декабре и продолжается до апреля. Лучшие условия — январь и февраль.' },
+        { q: 'Какой климат в Тбилиси?', a: 'Тбилиси находится в зоне умеренно-континентального климата. Лето жаркое (30–35°C), зима мягкая (2–7°C). Снег выпадает редко.' },
+      ].map(faq => (
+        <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button
+            class="w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white/5 transition-colors"
+            onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180')"
+          >
+            <h3 class="font-semibold text-white text-sm sm:text-base" itemprop="name">{faq.q}</h3>
+            <svg class="w-5 h-5 text-white/60 flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="hidden px-6 pb-5" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p class="text-white/70 text-sm leading-relaxed" itemprop="text">{faq.a}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

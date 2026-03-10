@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pagoda.ge/sitemap.xml

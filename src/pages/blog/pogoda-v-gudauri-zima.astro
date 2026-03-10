@@ -1,0 +1,88 @@
+---
+// src/pages/blog/pogoda-v-gudauri-zima.astro
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FAQ from '../../components/FAQ.astro';
+
+const seo = {
+  title: 'Погода в Гудаури зимой: горнолыжный сезон | pagoda.ge',
+  description: 'Всё о погоде в Гудаури зимой. Когда открывается сезон, сколько снега, температура на склонах. Пагода Гудаури — прогноз для лыжников и сноубордистов.',
+  keywords: 'погода в гудаури зимой, пагода гудаури, горнолыжный сезон гудаури, снег гудаури, пагода гудаури 7 дней',
+  canonical: 'https://pagoda.ge/blog/pogoda-v-gudauri-zima',
+};
+---
+
+<BaseLayout seo={seo} isDay={false}>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16" itemscope itemtype="https://schema.org/Article">
+    <nav class="flex items-center gap-2 text-white/50 text-sm mb-8">
+      <a href="/" class="hover:text-white">Пагода</a>
+      <span>/</span>
+      <a href="/blog" class="hover:text-white">Блог</a>
+      <span>/</span>
+      <span class="text-white">Гудаури зимой</span>
+    </nav>
+
+    <header class="mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="backdrop-blur-sm bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">Курорты</span>
+        <span class="text-white/40 text-xs">3 декабря 2024 · 6 мин чтения</span>
+      </div>
+      <h1 class="font-display text-4xl sm:text-5xl font-black text-white mb-6 leading-tight" itemprop="headline">
+        Погода в Гудаури зимой: всё о горнолыжном сезоне
+      </h1>
+      <p class="text-white/70 text-xl leading-relaxed">
+        Гудаури — один из лучших горнолыжных курортов Кавказа. Узнайте, когда ехать и чего ожидать от горной погоды.
+      </p>
+    </header>
+
+    <div class="space-y-8 text-white/80">
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">🏔 Гудаури: высота и климат</h2>
+        <p class="leading-relaxed mb-4">
+          Гудаури расположен на высоте 2200 метров над уровнем моря, а трассы поднимаются до 3300 м. Это обеспечивает стабильное снежное покрытие с декабря по апрель.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { month: 'Декабрь', temp: '-5 / +2°C', snow: '50–80 см' },
+            { month: 'Январь', temp: '-10 / -3°C', snow: '80–120 см' },
+            { month: 'Февраль', temp: '-9 / -2°C', snow: '100–150 см' },
+            { month: 'Март', temp: '-5 / +3°C', snow: '60–100 см' },
+          ].map(m => (
+            <div class="bg-white/10 rounded-xl p-4 text-center">
+              <div class="text-white font-semibold text-sm mb-2">{m.month}</div>
+              <div class="text-blue-200 text-xs mb-1">🌡 {m.temp}</div>
+              <div class="text-cyan-200 text-xs">❄️ {m.snow}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">🎿 Лучшее время для лыж</h2>
+        <p class="leading-relaxed mb-3">
+          Январь и февраль — золотые месяцы горнолыжного Гудаури. В это время снежный покров наиболее стабилен, а трассы работают в полную мощность. Метели случаются, но как правило недолго.
+        </p>
+        <p class="leading-relaxed mb-3">
+          Важный момент: Гудаури расположен на перевале, поэтому здесь бывают сильные ветра. Рекомендуем следить за прогнозом через <a href="/pagoda-gudauri" class="text-blue-300 hover:underline">Пагода Гудаури</a> — наш сервис предупреждает о неблагоприятных условиях.
+        </p>
+      </div>
+
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">⚠️ Погодные риски</h2>
+        <ul class="space-y-2 text-white/70">
+          <li class="flex items-start gap-2"><span class="text-yellow-400 mt-0.5">▲</span> <span><strong class="text-white">Туман:</strong> часто образуется в январе. Видимость может упасть до 50 метров.</span></li>
+          <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">▲</span> <span><strong class="text-white">Лавины:</strong> после сильных снегопадов часть трасс закрывается. Следите за официальными предупреждениями.</span></li>
+          <li class="flex items-start gap-2"><span class="text-blue-400 mt-0.5">▲</span> <span><strong class="text-white">Дорога из Тбилиси:</strong> Военно-Грузинская дорога может перекрываться при сильном снегопаде. Следите за новостями.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl">
+      <p class="text-white/70 text-sm">
+        Актуальная погода в Гудаури доступна на странице <a href="/pagoda-gudauri" class="text-blue-300 hover:underline">Пагода Гудаури</a>.
+        Прогноз обновляется каждые 10 минут.
+      </p>
+    </div>
+  </article>
+  <FAQ cityNameRu="Гудаури" />
+</BaseLayout>

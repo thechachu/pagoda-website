@@ -1,0 +1,184 @@
+---
+// src/components/WeatherCard.astro
+import type { WeatherData } from '../lib/weather';
+import { getWeatherGradient, getWindDirection, formatTime, formatDayName } from '../lib/weather';
+
+interface Props {
+  data: WeatherData;
+}
+const { data } = Astro.props;
+const { current, hourly, daily, daily30 } = data;
+const grad = getWeatherGradient(current.isDay, current.icon);
+const iconUrl = `https://openweathermap.org/img/wn/${current.icon}@2x.png`;
+
+function windDir(deg: number) { return getWindDirection(deg); }
+function fmtTime(ts: number) { return formatTime(ts, current.timezone); }
+function dayName(ts: number) { return formatDayName(ts); }
+
+const allDays = (daily30 && daily30.length > 7) ? daily30 : daily;
+---
+
+<div class="space-y-6">
+  <!-- Current Weather Card -->
+  <div class={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${grad} p-8 shadow-2xl border border-white/20`}>
+    <!-- Decorative circles -->
+    <div class="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/5"></div>
+    <div class="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-white/5"></div>
+
+    <div class="relative z-10">
+      <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
+        <!-- Left: temp + icon -->
+        <div class="flex items-start gap-4">
+          <div>
+            <div class="flex items-end gap-0">
+              <span class="font-display text-8xl font-black text-white leading-none">{current.temp}</span>
+              <span class="font-display text-4xl text-white/70 mb-2">°C</span>
+            </div>
+            <p class="text-white/80 text-lg capitalize mt-1">{current.descriptionRu || current.description}</p>
+            <p class="text-white/50 text-sm mt-1">Ощущается как {current.feelsLike}°C</p>
+          </div>
+          <img src={iconUrl} alt={current.description} width="80" height="80" class="w-20 h-20 drop-shadow-xl animate-float" />
+        </div>
+
+        <!-- Right: stats grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:text-right">
+          <div class="backdrop-blur-sm bg-white/10 rounded-2xl p-3">
+            <p class="text-white/50 text-xs">💧 Влажность</p>
+            <p class="text-white font-bold text-lg">{current.humidity}%</p>
+          </div>
+          <div class="backdrop-blur-sm bg-white/10 rounded-2xl p-3">
+            <p class="text-white/50 text-xs">💨 Ветер</p>
+            <p class="text-white font-bold text-lg">{current.windSpeed} <span class="text-sm font-normal">км/ч</span></p>
+            <p class="text-white/50 text-xs">{windDir(current.windDir)}</p>
+          </div>
+          <div class="backdrop-blur-sm bg-white/10 rounded-2xl p-3">
+            <p class="text-white/50 text-xs">🌡 Давление</p>
+            <p class="text-white font-bold text-lg">{current.pressure} <span class="text-sm font-normal">мм рт.ст.</span></p>
+          </div>
+          <div class="backdrop-blur-sm bg-white/10 rounded-2xl p-3">
+            <p class="text-white/50 text-xs">👁 Видимость</p>
+            <p class="text-white font-bold text-lg">{current.visibility} <span class="text-sm font-normal">км</span></p>
+          </div>
+          <div class="backdrop-blur-sm bg-white/10 rounded-2xl p-3">
+            <p class="text-white/50 text-xs">🌅 Рассвет</p>
+            <p class="text-white font-bold">{fmtTime(current.sunrise)}</p>
+          </div>
+          <div class="backdrop-blur-sm bg-white/10 rounded-2xl p-3">
+            <p class="text-white/50 text-xs">🌇 Закат</p>
+            <p class="text-white font-bold">{fmtTime(current.sunset)}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div x-data="{ tab: '24h' }" class="space-y-4">
+    <div class="flex gap-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-1.5">
+      <button
+        onclick="switchTab('24h', this)"
+        class="tab-btn active flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 bg-white/20 text-white"
+        data-tab="24h"
+      >
+        24 часа
+      </button>
+      <button
+        onclick="switchTab('7d', this)"
+        class="tab-btn flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-white/60 hover:text-white"
+        data-tab="7d"
+      >
+        7 дней
+      </button>
+      <button
+        onclick="switchTab('30d', this)"
+        class="tab-btn flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-white/60 hover:text-white"
+        data-tab="30d"
+      >
+        30 дней
+      </button>
+    </div>
+
+    <!-- 24 Hours -->
+    <div id="tab-24h" class="tab-panel">
+      <div class="overflow-x-auto -mx-2 px-2">
+        <div class="flex gap-3 min-w-max pb-2">
+          {hourly.map((h) => {
+            const d = new Date(h.dt * 1000);
+            const hr = d.getUTCHours().toString().padStart(2, '0') + ':00';
+            return (
+              <div class="flex flex-col items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-4 min-w-[80px] hover:bg-white/20 transition-colors">
+                <span class="text-white/60 text-xs font-mono">{hr}</span>
+                <img src={`https://openweathermap.org/img/wn/${h.icon}.png`} alt={h.description} width="40" height="40" class="w-10 h-10" />
+                <span class="text-white font-bold text-lg">{h.temp}°</span>
+                {h.pop > 10 && <span class="text-blue-200 text-xs">💧{h.pop}%</span>}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 Days -->
+    <div id="tab-7d" class="tab-panel hidden">
+      <div class="space-y-2">
+        {daily.map((d, i) => {
+          const isToday = i === 0;
+          return (
+            <div class="flex items-center gap-4 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-5 py-4 hover:bg-white/15 transition-colors">
+              <span class="text-white font-semibold w-12 text-sm">{isToday ? 'Сегодня' : dayName(d.dt)}</span>
+              <img src={`https://openweathermap.org/img/wn/${d.icon}.png`} alt={d.description} width="40" height="40" class="w-10 h-10" />
+              <span class="text-white/60 text-sm flex-1 capitalize hidden sm:block">{d.description}</span>
+              {d.pop > 10 && <span class="text-blue-200 text-xs">💧{d.pop}%</span>}
+              <div class="flex items-center gap-2 ml-auto">
+                <span class="text-white/50 text-sm">{d.tempMin}°</span>
+                <div class="w-16 h-1.5 rounded-full bg-white/20 hidden sm:block">
+                  <div class="h-full rounded-full bg-gradient-to-r from-blue-300 to-orange-300" style={`width: ${Math.min(100, ((d.tempMax - d.tempMin) / 20) * 100)}%`}></div>
+                </div>
+                <span class="text-white font-bold text-sm">{d.tempMax}°</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- 30 Days -->
+    <div id="tab-30d" class="tab-panel hidden">
+      <div class="space-y-2">
+        {allDays.map((d, i) => {
+          const months = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+          const date = new Date(d.dt * 1000);
+          const label = i === 0 ? 'Сегодня' : `${date.getUTCDate()} ${months[date.getUTCMonth()]}`;
+          return (
+            <div class="flex items-center gap-4 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-5 py-3.5 hover:bg-white/15 transition-colors">
+              <span class="text-white font-semibold w-16 text-sm">{label}</span>
+              <img src={`https://openweathermap.org/img/wn/${d.icon}.png`} alt={d.description} width="32" height="32" class="w-8 h-8" />
+              <span class="text-white/60 text-xs flex-1 capitalize hidden sm:block">{d.description}</span>
+              {d.pop > 10 && <span class="text-blue-200 text-xs">💧{d.pop}%</span>}
+              <div class="flex items-center gap-2 ml-auto">
+                <span class="text-white/50 text-sm">{d.tempMin}°</span>
+                <span class="text-white font-bold text-sm">{d.tempMax}°</span>
+              </div>
+            </div>
+          );
+        })}
+        {(!daily30 || daily30.length <= 7) && (
+          <p class="text-white/40 text-xs text-center py-2">Расширенный прогноз требует подписки OpenWeatherMap One Call 3.0. Показан прогноз на 7 дней.</p>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tabId: string, btn: HTMLElement) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('bg-white/20', 'text-white');
+    b.classList.add('text-white/60');
+  });
+  document.getElementById('tab-' + tabId)?.classList.remove('hidden');
+  btn.classList.add('bg-white/20', 'text-white');
+  btn.classList.remove('text-white/60');
+}
+</script>

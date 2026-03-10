@@ -1,0 +1,130 @@
+---
+// src/pages/blog/klimat-gruzii-po-mestam.astro
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FAQ from '../../components/FAQ.astro';
+
+const seo = {
+  title: 'Климат Грузии: от Батуми до Сванетии | pagoda.ge',
+  description: 'Климатические зоны Грузии: субтропики Батуми, континентальный Тбилиси, горы Сванетии. Пагода в Грузии — подробный гид по погоде и климату всей страны.',
+  keywords: 'климат грузии, климатические зоны грузии, пагода грузия климат, погода в грузии по регионам',
+  canonical: 'https://pagoda.ge/blog/klimat-gruzii-po-mestam',
+};
+---
+
+<BaseLayout seo={seo}>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16" itemscope itemtype="https://schema.org/Article">
+    <nav class="flex items-center gap-2 text-white/50 text-sm mb-8">
+      <a href="/" class="hover:text-white">Пагода</a>
+      <span>/</span>
+      <a href="/blog" class="hover:text-white">Блог</a>
+      <span>/</span>
+      <span class="text-white">Климат Грузии</span>
+    </nav>
+
+    <header class="mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="backdrop-blur-sm bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">Климат</span>
+        <span class="text-white/40 text-xs">20 сентября 2024 · 10 мин чтения</span>
+      </div>
+      <h1 class="font-display text-4xl sm:text-5xl font-black text-white mb-6 leading-tight" itemprop="headline">
+        Климат Грузии: от субтропиков Батуми до горных ледников Сванетии
+      </h1>
+      <p class="text-white/70 text-xl leading-relaxed">
+        Грузия — удивительная страна, где на площади меньше Германии умещается несколько климатических зон.
+      </p>
+    </header>
+
+    <div class="space-y-8 text-white/80">
+
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">🌊 Западная Грузия: субтропики</h2>
+        <p class="leading-relaxed mb-3">
+          Батуми, Кобулети, Поти и Уреки находятся в зоне влажных субтропиков. Здесь тепло круглый год: зимой температура редко опускается ниже +5°C, летом — до +35°C.
+        </p>
+        <p class="leading-relaxed mb-3">
+          Западная Грузия — самый дождливый регион: годовое количество осадков в Батуми достигает 2500–2800 мм. Дожди идут часто, но обычно кратковременные.
+        </p>
+        <div class="grid grid-cols-3 gap-3 mt-4">
+          <div class="bg-emerald-500/20 border border-emerald-400/30 rounded-xl p-3 text-center">
+            <div class="text-white font-bold">Батуми</div>
+            <div class="text-green-200 text-xs mt-1">Субтропики</div>
+            <div class="text-white/60 text-xs">Зима: 6–10°C</div>
+            <div class="text-white/60 text-xs">Лето: 25–30°C</div>
+          </div>
+          <div class="bg-emerald-500/20 border border-emerald-400/30 rounded-xl p-3 text-center">
+            <div class="text-white font-bold">Уреки</div>
+            <div class="text-green-200 text-xs mt-1">Магнитный курорт</div>
+            <div class="text-white/60 text-xs">Зима: 5–9°C</div>
+            <div class="text-white/60 text-xs">Лето: 24–28°C</div>
+          </div>
+          <div class="bg-emerald-500/20 border border-emerald-400/30 rounded-xl p-3 text-center">
+            <div class="text-white font-bold">Кобулети</div>
+            <div class="text-green-200 text-xs mt-1">Черноморский</div>
+            <div class="text-white/60 text-xs">Зима: 5–9°C</div>
+            <div class="text-white/60 text-xs">Лето: 25–29°C</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">🏙 Восточная Грузия: континентальный климат</h2>
+        <p class="leading-relaxed mb-3">
+          Тбилиси и восток страны находятся в зоне умеренно-континентального климата. Лето жаркое и сухое (30–38°C), зима прохладная (0–7°C). Осадков значительно меньше, чем на западе.
+        </p>
+        <p class="leading-relaxed mb-3">
+          Кахетия — регион виноградарства — отличается особенно тёплым и сухим летом. Именно такой климат идеален для производства вина. Телави и Сигнахи окружены виноградниками.
+        </p>
+      </div>
+
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">🏔 Горная Грузия: суровый альпийский климат</h2>
+        <p class="leading-relaxed mb-3">
+          Выше 2000 метров климат резко меняется. В Сванетии (Местиа — 1500 м) зимы длинные и снежные, лето короткое и прохладное.
+        </p>
+        <p class="leading-relaxed mb-3">
+          Горная погода непредсказуема: даже летом в горах возможны снегопады. <a href="/pagoda-mestia" class="text-blue-300 hover:underline">Пагода Местиа</a> поможет следить за горной погодой в режиме реального времени.
+        </p>
+      </div>
+
+      <div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-4">🌡 Сравнительная таблица климата</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/20">
+                <th class="text-left text-white/60 pb-3 pr-4">Город</th>
+                <th class="text-center text-white/60 pb-3 pr-4">Январь</th>
+                <th class="text-center text-white/60 pb-3 pr-4">Июль</th>
+                <th class="text-center text-white/60 pb-3">Осадки/год</th>
+              </tr>
+            </thead>
+            <tbody class="space-y-2">
+              {[
+                { city: 'Тбилиси', jan: '2°C', jul: '30°C', rain: '500 мм' },
+                { city: 'Батуми', jan: '7°C', jul: '27°C', rain: '2600 мм' },
+                { city: 'Кутаиси', jan: '4°C', jul: '25°C', rain: '1500 мм' },
+                { city: 'Гудаури', jan: '-8°C', jul: '16°C', rain: '700 мм' },
+                { city: 'Местиа', jan: '-5°C', jul: '18°C', rain: '1100 мм' },
+              ].map(row => (
+                <tr class="border-b border-white/10">
+                  <td class="text-white py-2.5 pr-4 font-medium">{row.city}</td>
+                  <td class="text-blue-200 py-2.5 pr-4 text-center">{row.jan}</td>
+                  <td class="text-orange-200 py-2.5 pr-4 text-center">{row.jul}</td>
+                  <td class="text-cyan-200 py-2.5 text-center">{row.rain}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-10 p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl">
+      <p class="text-white/70 text-sm">
+        Следите за актуальной погодой во всех городах Грузии на <a href="/" class="text-blue-300 hover:underline">pagoda.ge</a> — обновляется каждые 10 минут.
+      </p>
+    </div>
+  </article>
+  <FAQ cityNameRu="Грузии" />
+</BaseLayout>
